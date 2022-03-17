@@ -1,5 +1,4 @@
 package hellojpa;
-
 import javax.persistence.*;
 
 @Entity
@@ -13,8 +12,17 @@ public class Member {
     private String username;
 
     @ManyToOne
-    @JoinColumn(name = "TEAM_ID")
+    @JoinColumn(name ="TEAM_Id")
     private Team team;
+
+    @OneToOne
+    @JoinColumn(name ="LOKCER_ID")
+    private Locker locker;
+
+    public void changeTeam(Team team){
+        this.team = team;
+        team.getMembers().add(this);
+    }
 
     public Long getId() {
         return id;
@@ -39,4 +47,6 @@ public class Member {
     public void setTeam(Team team) {
         this.team = team;
     }
+
+
 }
