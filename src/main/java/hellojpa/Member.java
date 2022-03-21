@@ -2,7 +2,7 @@ package hellojpa;
 import javax.persistence.*;
 
 @Entity
-public class Member {
+public class Member extends BaseEntity{
 
     @Id @GeneratedValue
     @Column(name = "MEMBER_ID")
@@ -11,13 +11,9 @@ public class Member {
     @Column(name = "USERNAME")
     private String username;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name ="TEAM_Id")
     private Team team;
-
-    @OneToOne
-    @JoinColumn(name ="LOKCER_ID")
-    private Locker locker;
 
     public void changeTeam(Team team){
         this.team = team;

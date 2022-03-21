@@ -18,25 +18,9 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Team team = new Team();
-            team.setName("team A");
-            em.persist(team);
 
-            Member member = new Member();
-            member.setUsername("member1");
-            member.setTeam(team);
-            em.persist(member);
 
-            member.changeTeam(team);
 
-            Team findTeam = em.find(Team.class, team.getId());
-            List<Member> members = findTeam.getMembers();
-
-            System.out.println("===============");
-            for (Member m : members) {
-                System.out.println("m.getUsername() = " + m.getUsername());
-            }
-            System.out.println("===============");
 
             tx.commit();
         } catch(Exception e){
@@ -49,6 +33,25 @@ public class JpaMain {
         emf.close();
 
 
+    }
+
+    private static void logic(Member findMember1, Member findMember2) {
+        System.out.println("(findMember1 instanceof Member = " + (findMember1 instanceof Member));
+        System.out.println("(findMember1 instanceof Member = " + (findMember2 instanceof Member));
+
+    }
+
+    private static void printMember(Member member) {
+        System.out.println("member = " + member.getUsername());
+        
+    }
+
+    private static void printMemberAndTeam(Member member) {
+        String username = member.getUsername();
+        System.out.println("username = " + username);
+
+        Team team = member.getTeam();
+        System.out.println("team.getName() = " + team.getName());
     }
 
 }
