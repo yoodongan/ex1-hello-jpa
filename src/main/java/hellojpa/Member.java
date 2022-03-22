@@ -2,7 +2,7 @@ package hellojpa;
 import javax.persistence.*;
 
 @Entity
-public class Member extends BaseEntity{
+public class Member {
 
     @Id @GeneratedValue
     @Column(name = "MEMBER_ID")
@@ -15,9 +15,49 @@ public class Member extends BaseEntity{
     @JoinColumn(name ="TEAM_Id")
     private Team team;
 
+    public Member() {
+    }
+
     public void changeTeam(Team team){
         this.team = team;
         team.getMembers().add(this);
+    }
+    @Embedded
+    private Address homeAddress;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "city", column = @Column(name = "WORK_CITY")),
+            @AttributeOverride(name = "street", column = @Column(name = "WORK_STREET")),
+            @AttributeOverride(name = "zipcode", column = @Column(name = "WORK_ZIPCODE")),
+    })
+    private Address workAddress;
+
+
+    @Embedded
+    private Period workPeriod;
+
+    public Address getHomeAddress() {
+        return homeAddress;
+    }
+
+    public Address getWorkAddress() {
+        return workAddress;
+    }
+
+    public void setWorkAddress(Address workAddress) {
+        this.workAddress = workAddress;
+    }
+
+    public void setHomeAddress(Address homeAddress) {
+        this.homeAddress = homeAddress;
+    }
+
+    public Period getWorkPeriod() {
+        return workPeriod;
+    }
+
+    public void setWorkPeriod(Period workPeriod) {
+        this.workPeriod = workPeriod;
     }
 
     public Long getId() {
